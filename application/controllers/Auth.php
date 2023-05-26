@@ -13,10 +13,57 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data["title"] = "Sign In";
-            $this->load->view("templates/header", $data);
+            $this->load->view("templates/auth_header", $data);
             $this->load->view("auth/signin");
-            $this->load->view("templates/footer");
+            $this->load->view("templates/auth_footer");
         } else {
+            $this->_login();
+        }
+    }
+    private function _login()
+    {
+        $email = $this->input->post("email");
+        $password = $this->input->post("password");
+        $user = $this->db->get_where("users", ["email" => $email])->row_array();
+        if ($user) {
+            if ($user["is_active"] == 1) {
+                if (password_verify($password, $user["password"])) {
+                    $data = [
+                        "email" => $user["email"],
+                        "role_id" => $user["role_id"]
+                    ];
+                    $this->session->set_userdata($data);
+                    if ($data["role_id"] == 1) {
+                        redirect("admin");
+                    } else {
+                        redirect("user");
+                    }
+                } else {
+                    $this->session->set_flashdata("message", '<div class="alert alert-danger alert-dismissible text-white" role="alert">
+                    <span class="text-sm">Wrong password!</span>
+                    <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>');
+                    redirect("auth");
+                }
+            } else {
+                $this->session->set_flashdata("message", '<div class="alert alert-danger alert-dismissible text-white" role="alert">
+                <span class="text-sm">This email has not been activated yet!</span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>');
+                redirect("auth");
+            }
+        } else {
+            $this->session->set_flashdata("message", '<div class="alert alert-danger alert-dismissible text-white" role="alert">
+            <span class="text-sm">Email is not registered!</span>
+            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>');
+            redirect("auth");
         }
     }
     public function signup()
@@ -33,9 +80,9 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $data["title"] = "Sign Up";
-            $this->load->view("templates/header", $data);
+            $this->load->view("templates/auth_header", $data);
             $this->load->view("auth/signup");
-            $this->load->view("templates/footer");
+            $this->load->view("templates/auth_footer");
         } else {
             $data = [
                 "name"         => $this->input->post("name"),
@@ -54,8 +101,19 @@ class Auth extends CI_Controller
                 <span aria-hidden="true">×</span>
             </button>
         </div>');
-
             redirect("auth");
         }
+    }
+    public function logout()
+    {
+        $this->session->unset_userdata("email");
+        $this->session->unset_userdata("role_id");
+        $this->session->set_flashdata("message", '<div class="alert alert-success alert-dismissible text-white" role="alert">
+        <span class="text-sm">You had been logged out!</span>
+        <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>');
+        redirect("auth");
     }
 }

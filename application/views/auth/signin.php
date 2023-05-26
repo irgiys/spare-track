@@ -12,11 +12,12 @@
                         </div>
                         <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
                             <div class="card card-plain">
-                                <div class="card-header">
+                                <div class="card-header py-0">
                                     <h4 class="font-weight-bolder">Sign In to SpareTrack</h4>
                                     <p class="mb-0">Enter your email and password to login</p>
                                 </div>
                                 <div class="card-body">
+                                    <?= $this->session->flashdata("message"); ?>
                                     <form role="form" method="post" action="<?= base_url("auth") ?>">
                                         <div class="input-group input-group-outline mt-3 mb-0 <?php if (form_error("email")) : echo "is-invalid"; ?> <?php endif; ?>">
                                             <label class="form-label">Email</label>
