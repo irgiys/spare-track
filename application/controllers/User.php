@@ -4,7 +4,8 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!($this->__getUser())) {
+        $user = $this->__getUser();
+        if (!$user || $user["role_id"] != 1) {
             redirect("auth");
         }
     }
@@ -46,7 +47,7 @@ class User extends CI_Controller
         $data["profile"] = true;
         $this->load->view("templates/header", $data);
         $this->load->view("templates/sidebar", $data);
-        $this->load->view("user/index", $data);
+        $this->load->view("profile", $data);
         $this->load->view("templates/footer");
     }
     private function __getUser()

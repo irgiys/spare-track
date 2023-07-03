@@ -12,6 +12,12 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('password', "Password", 'trim|required');
 
         if ($this->form_validation->run() == false) {
+            if ($this->session->userdata("role_id") == 1) {
+                redirect(base_url() . "user");
+            }
+            if ($this->session->userdata("role_id") == 2) {
+                redirect(base_url() . "admin");
+            }
             $data["title"] = "Sign In";
             $this->load->view("templates/auth_header", $data);
             $this->load->view("auth/signin");
@@ -34,9 +40,9 @@ class Auth extends CI_Controller
                     ];
                     $this->session->set_userdata($data);
                     if ($data["role_id"] == 1) {
-                        redirect("admin");
-                    } else {
                         redirect("user");
+                    } else {
+                        redirect("admin");
                     }
                 } else {
                     $this->session->set_flashdata("message", '<div class="alert alert-danger alert-dismissible text-white" role="alert">
@@ -89,7 +95,7 @@ class Auth extends CI_Controller
                 "email"        => $this->input->post("email"),
                 "image"        => "default.jpg",
                 "password"     => password_hash($this->input->post("password1"), PASSWORD_DEFAULT),
-                "role_id"      => 2,
+                "role_id"      => $this->input->post("role"),
                 "is_active"    => 1,
                 "date_created" => time()
             ];

@@ -34,7 +34,7 @@
                                             <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember me</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-0 mb-0">Sign In</button>
+                                            <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-0 mb-0 focus-ring">Sign In</button>
                                         </div>
                                     </form>
                                 </div>
