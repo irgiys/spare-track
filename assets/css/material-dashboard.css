@@ -98,7 +98,9 @@
 *::after {
   box-sizing: border-box;
 }
-
+.object-fit-cover{
+  object-fit: cover;
+}
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;

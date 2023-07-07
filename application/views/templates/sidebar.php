@@ -31,15 +31,17 @@
                     <span class="nav-link-text ms-1">History</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white <?php if (isset($notifications)) : echo 'active bg-gradient-primary' ?>
-                <?php endif; ?>" href="<?= base_url("user/notifications") ?>">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Notifications</span>
-                </a>
-            </li>
+            <?php if ($user["role_id"] == 2) : ?>
+                <li class="nav-item">
+                    <a class="nav-link text-white <?php if (isset($users)) : echo 'active bg-gradient-primary' ?>
+                    <?php endif; ?>" href="<?= base_url("admin/users") ?>">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">person</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Users</span>
+                    </a>
+                </li>
+            <?php endif; ?>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
             </li>

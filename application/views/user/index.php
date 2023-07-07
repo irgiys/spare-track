@@ -62,7 +62,6 @@
                        <label class="form-label">Live search...</label>
                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" id="searchbox" oninput="setTimeout(function(){liveSearch();},500);">
                    </div>
-
                    <div class="row">
                        <div class="col-12">
                            <div class="card my-4">
@@ -148,7 +147,7 @@
                                        <div class="copyright text-center text-sm text-muted text-lg-start">
                                            © <?= date("Y") ?>
                                            made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                                           <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                                           <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Team 5</a>
                                        </div>
                                    </div>
                                </div>

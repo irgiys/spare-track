@@ -51,11 +51,11 @@
         <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80');">
             <span class="mask  bg-gradient-primary  opacity-6"></span>
         </div>
-        <div class="card card-body mx-3 mx-md-4 mt-n6">
+        <div class="card card-body mx-3 mx-md-8 mt-n6">
             <div class="row gx-4 mb-2">
                 <div class="col-auto">
                     <div class="avatar avatar-xl position-relative">
-                        <img src="<?= base_url() ?>assets/img/profiles/<?= $user["image"]  ?>" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                        <img src="<?= base_url() ?>assets/img/profiles/<?= $user["image"]  ?>" alt="profile_image" class="w-100 h-100 border-radius-lg shadow-sm object-fit-cover">
                     </div>
                 </div>
                 <div class="col-auto my-auto">
@@ -70,6 +70,57 @@
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; <?= $user["email"] ?></li>
                         </ul>
                     </div>
+                </div>
+                <div class="col d-flex justify-content-end align-items-center">
+                    <button type="button" class="btn btn-primary m-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Update
+                    </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Update Profile</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="<?= base_url("") ?>profile/update" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="<?= $user["id"] ?>">
+                                        <div class="mb-4">
+                                            <div class="input-group input-group-static mb-4">
+                                                <label>Nama</label>
+                                                <input type="text" name="nama" class="form-control" placeholder="<?= $user["name"] ?>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="input-group input-group-static mb-4">
+                                                <label>Email</label>
+                                                <input type="text" name="email" class="form-control" placeholder="<?= $user["email"] ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label for="foto" class="form-label">Upload foto</label>
+                                            <div class="row">
+                                                <div>
+                                                    <div class="avatar avatar-xl position-relative">
+                                                        <img src="<?= base_url() ?>assets/img/profiles/<?= $user["image"]  ?>" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <input type="file" id="foto" name="foto" class="form-control outline" accept="image/png, image/gif, image/jpeg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
