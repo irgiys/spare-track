@@ -5,14 +5,13 @@ class Barang extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!($this->__getAdmin())) {
+        $admin = $this->__getAdmin();
+        if (!$admin || $admin["role_id"] != 2) {
             redirect("auth");
         }
         $this->load->model("Barang_model");
     }
-    public function index()
-    {
-    }
+
     public function tambah()
     {
         $foto = $_FILES['foto'];

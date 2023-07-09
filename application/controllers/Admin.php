@@ -4,7 +4,8 @@ class Admin extends CI_Controller
    public function __construct()
    {
       parent::__construct();
-      if (!($this->__getAdmin())) {
+      $admin = $this->__getAdmin();
+      if (!$admin || $admin["role_id"] != 2) {
          redirect("auth");
       }
    }
@@ -18,6 +19,18 @@ class Admin extends CI_Controller
       $this->load->view("templates/header", $data);
       $this->load->view("templates/sidebar", $data);
       $this->load->view("admin/index");
+      $this->load->view("templates/footer");
+   }
+   public function history()
+   {
+      $data["title"] = "History";
+      $data["user"] = $this->__getAdmin();
+      $data["history"] = true;
+      $data["barang"] = $this->db->select(["quantity", "total", "tanggal", "checkout.checkout_id", "product_id", "user_id", "status", "harga", "nama", "merk", "kategori", "foto"])->where("status", 1)->from("checkout")->join("checkout_product", "checkout.checkout_id = checkout_product.checkout_id")->join("barang", "checkout_product.product_id = barang.id")->get()->result_array();
+
+      $this->load->view("templates/header", $data);
+      $this->load->view("templates/sidebar", $data);
+      $this->load->view("history");
       $this->load->view("templates/footer");
    }
    public function profile()

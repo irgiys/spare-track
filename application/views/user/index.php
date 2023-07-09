@@ -24,14 +24,88 @@
                                    </a>
                                </li>
                                <li class="nav-item dropdown ps-3 pe-2 d-flex align-items-center">
-                                   <a href="" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                   <a href="#" class="nav-link text-body p-0 position-relative" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                        <i class="fa fa-shopping-cart me-lg-1"></i>
-
                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                                           9
-                                           <span class="visually-hidden">unread messages</span>
+                                           <?= $count_cart ?>
+                                           <span class="visually-hidden">in cart</span>
                                        </span>
                                    </a>
+                                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog modal-dialog-centered">
+                                           <div class="modal-content">
+                                               <div class="modal-header">
+                                                   <h1 class="modal-title fs-5" id="exampleModalLabel">Checkout</h1>
+                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                               </div>
+                                               <div class="modal-body">
+                                                   <div class="table-responsive p-0">
+                                                       <table class="table align-items-center mb-0">
+                                                           <thead>
+                                                               <tr>
+                                                                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama barang</th>
+                                                                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis</th>
+
+                                                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
+                                                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty</th>
+                                                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                                                               </tr>
+                                                           </thead>
+                                                           <tbody>
+                                                               <?php $total = 0;
+                                                                $checkId ?>
+                                                               <?php foreach ($in_cart as $bi) : ?>
+                                                                   <tr id="data_list">
+                                                                       <td>
+                                                                           <div class="d-flex px-2 py-1">
+                                                                               <div>
+                                                                                   <img src="<?= base_url() ?>/assets/img/products/<?= $bi["foto"] ?> " class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                                                               </div>
+                                                                               <div class="d-flex flex-column justify-content-center">
+                                                                                   <h6 class="mb-0 text-sm"><?= $bi["nama"] ?></h6>
+                                                                                   <p class="text-xs text-secondary mb-0"><?= $bi["merk"] ?></p>
+                                                                               </div>
+                                                                           </div>
+                                                                       </td>
+                                                                       <td>
+                                                                           <p class="text-xs font-weight-bold mb-0"><?= $bi["kategori"] ?></p>
+                                                                       </td>
+                                                                       <td class="align-middle text-center text-sm">
+                                                                           <span class="text-secondary text-xs font-weight-bold harga">Rp<?= $bi["harga"] ?></span>
+                                                                       </td>
+                                                                       <td class="align-middle text-center">
+                                                                           <span class="text-secondary text-xs font-weight-bold quantity"><?= $bi["quantity"] ?></span>
+                                                                       </td>
+                                                                       <td class="align-middle text-center">
+                                                                           <a href="<?= base_url("/user/del_cart/") . $bi["product_id"] ?>" class="" data-toggle="tooltip" data-original-title="Edit barang">
+                                                                               <i class="material-icons text-lg me-2">delete</i>
+                                                                           </a>
+                                                                       </td>
+                                                                   </tr>
+                                                                   <?php $total += $bi["harga"] * $bi["quantity"];
+                                                                    $checkId = $bi["checkout_id"] ?>
+                                                               <?php endforeach; ?>
+                                                           </tbody>
+                                                       </table>
+                                                   </div>
+                                                   <div class="modal-footer">
+                                                       <form method="post" action="<?= base_url("user/checkout") ?>">
+                                                           <?php if (isset($checkId)) : ?>
+                                                               <input type="hidden" name="check_id" value="<?= $checkId ?>">
+                                                               <input type="hidden" name="user_id" value="<?= $user["id"] ?>">
+                                                               <input type="hidden" name="total" value="<?= $total ?>">
+                                                               <button type="button" class="btn text-primary">Total Rp<?= $total ?></button>
+                                                           <?php endif; ?>
+                                                           <button type="button" class="btn" data-bs-dismiss="modal">Tutup</button>
+                                                           <button type="submit" class="btn btn-primary">Checkout</button>
+                                                       </form>
+                                                   </div>
+                                                   </form>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+
                                </li>
 
                                <li class="nav-item dropdown ps-3 pe-2 d-flex align-items-center">
@@ -74,66 +148,43 @@
                                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Jenis</th>
                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Harga</th>
-                                                   <th class="text-secondary opacity-7"></th>
+                                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
+                                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                                </tr>
                                            </thead>
                                            <tbody>
-                                               <tr id="data_list">
-                                                   <td>
-                                                       <div class="d-flex px-2 py-1">
-                                                           <div>
-                                                               <img src="<?= base_url() ?>/assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                               <?php foreach ($barang as $b) : ?>
+                                                   <tr id="data_list">
+                                                       <td>
+                                                           <div class="d-flex px-2 py-1">
+                                                               <div>
+                                                                   <img src="<?= base_url() ?>/assets/img/products/<?= $b["foto"] ?> " class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                                               </div>
+                                                               <div class="d-flex flex-column justify-content-center">
+                                                                   <h6 class="mb-0 text-sm"><?= $b["nama"] ?></h6>
+                                                                   <p class="text-xs text-secondary mb-0"><?= $b["merk"] ?></p>
+                                                               </div>
                                                            </div>
-                                                           <div class="d-flex flex-column justify-content-center">
-                                                               <h6 class="mb-0 text-sm">John Michael</h6>
-                                                               <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
-                                                           </div>
-                                                       </div>
-                                                   </td>
-                                                   <td>
-                                                       <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                                       <p class="text-xs text-secondary mb-0">Organization</p>
-                                                   </td>
-                                                   <td class="align-middle text-center text-sm">
-                                                       <span class="badge badge-sm bg-gradient-success">100</span>
-                                                   </td>
-                                                   <td class="align-middle text-center">
-                                                       <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                                                   </td>
-                                                   <td class="align-middle">
-                                                       <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                           Edit
-                                                       </a>
-                                                   </td>
-                                               </tr>
-                                               <tr id="data_list">
-                                                   <td>
-                                                       <div class="d-flex px-2 py-1">
-                                                           <div>
-                                                               <img src="<?= base_url() ?>/assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user6">
-                                                           </div>
-                                                           <div class="d-flex flex-column justify-content-center">
-                                                               <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                                                               <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                                                           </div>
-                                                       </div>
-                                                   </td>
-                                                   <td>
-                                                       <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                       <p class="text-xs text-secondary mb-0">Developer</p>
-                                                   </td>
-                                                   <td class="align-middle text-center text-sm">
-                                                       <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                                   </td>
-                                                   <td class="align-middle text-center">
-                                                       <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                                                   </td>
-                                                   <td class="align-middle">
-                                                       <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                           Edit
-                                                       </a>
-                                                   </td>
-                                               </tr>
+                                                       </td>
+                                                       <td>
+                                                           <p class="text-xs font-weight-bold mb-0"><?= $b["kategori"] ?></p>
+                                                       </td>
+                                                       <td class="align-middle text-center text-sm">
+                                                           <span class="badge badge-sm bg-gradient-success"><?= $b["stok"] ?></span>
+                                                       </td>
+                                                       <td class="align-middle text-center">
+                                                           <span class="text-secondary text-xs font-weight-bold">Rp<?= $b["harga"] ?></span>
+                                                       </td>
+                                                       <td class="align-middle text-center">
+                                                           <span class="text-secondary text-xs font-weight-bold"><?= date("Y-m-d", $b["added_at"]) ?></span>
+                                                       </td>
+                                                       <td class="align-middle text-center">
+                                                           <a href="<?= base_url("/user/cart/" . $b['id']) ?>" class="text-primary font-weight-bold text-xl" data-toggle="tooltip" data-original-title="Edit barang">
+                                                               <i class="fas fa-cart-plus"></i>
+                                                           </a>
+                                                       </td>
+                                                   </tr>
+                                               <?php endforeach; ?>
                                            </tbody>
                                        </table>
                                    </div>
@@ -154,6 +205,7 @@
                            </div>
                        </footer>
                    </div>
+
                </div>
            </main>
            <script>

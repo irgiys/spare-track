@@ -24,7 +24,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white <?php if (isset($history)) : echo 'active bg-gradient-primary' ?>
-                <?php endif; ?>" href="<?= base_url("user/history") ?>">
+                <?php endif; ?>" href="<?= $user["role_id"] == 1 ?  base_url("user/history") :  base_url("admin/history") ?>">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">receipt_long</i>
                     </div>
