@@ -88,13 +88,13 @@
                                         <div class="mb-4">
                                             <div class="input-group input-group-static mb-4">
                                                 <label>Nama</label>
-                                                <input type="text" name="nama" class="form-control" placeholder="<?= $user["name"] ?>">
+                                                <input type="text" name="nama" class="form-control" placeholder="<?= $user["name"] ?>" required>
                                             </div>
                                         </div>
                                         <div class="mb-4">
                                             <div class="input-group input-group-static mb-4">
                                                 <label>Email</label>
-                                                <input type="text" name="email" class="form-control" placeholder="<?= $user["email"] ?>">
+                                                <input type="text" name="email" class="form-control" placeholder="<?= $user["email"] ?>" required>
                                             </div>
                                         </div>
 
